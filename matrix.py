@@ -1,11 +1,27 @@
 # -*- coding: utf-8 -*-
 import sys
+import argparse
+parser = argparse.ArgumentParser(description='Enter birthday')
+parser.add_argument(
+    '-D',
+    '--birthday',
+    default='13-06-1966',
+    help='provide an birthday -D=ddmmyyyy (default: 13-06-1966 )'
+)
+parser.add_argument(
+    '-N',
+    '--fullname',
+    default='ФамилияИмяОтчество',
+    help='provide an fullname -N=ФамилияИмяОтчество (default: ФамилияИмяОтчество )'
+)
+my_namespace = parser.parse_args()
+print(my_namespace)
 import re
 from functools import reduce
 
 
-fullname = ''
-indata = '13.06.1966'
+fullname = my_namespace.fullname #'Владимир Владимирович Путин'
+indata = my_namespace.birthday #'13.06.1966'
 '''
 WN1: 32
 WN2: 5
