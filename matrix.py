@@ -19,21 +19,15 @@ print(my_namespace)
 import re
 from functools import reduce
 
-
-fullname = my_namespace.fullname #'Владимир Владимирович Путин'
-indata = my_namespace.birthday #'13.06.1966'
+fullname = my_namespace.fullname
+indata = my_namespace.birthday
 '''
-WN1: 32
-WN2: 5
-WN3: 6
-WN4: 6
-Владимир Владимирович Путин
-13.06.1966
-32 5 6 6
-1306196632566
-1,1|null|null
-2|5|null
-3,3|6,6,6,6,6|9
+17-11-1991
+30 3 28 10
+171119913032810
+[111111][][7]
+[2][][8]
+[33][][99]
 '''
 
 dmyarr = re.split(r'[,.;-]', indata)
