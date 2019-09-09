@@ -19,11 +19,11 @@ parser.add_argument(
 parser.add_argument(
     '-n',
     '--fullname',
-    default='ФамилияИмяОтчество',
-    help='provide an fullname -n=ФамилияИмяОтчество (default: ФамилияИмяОтчество )'
+    default='LastnameNamePatronymic',
+    help='provide an fullname -n=ФамилияИмяОтчество (default: LastnameNamePatronymic )'
 )
 my_namespace = parser.parse_args()
-print(my_namespace)
+#print(my_namespace)
 
 fullname = my_namespace.fullname
 indata = my_namespace.birthday
@@ -71,7 +71,7 @@ def nd(fwnarr):
     res = fwnarr
     while (len(str(res)) != 1):
         res = strsum(res)
-        print(res)
+    print('NumDesteny = ', res)
     return res
 
 #Begin==================================================
@@ -82,7 +82,7 @@ dmyarr = re.split(r'[/,.;-]', indata)   # массив [dd, mm, yyyy]
 #check: print(fwnarr, ' ', dmyarr)
 day = str(int(dmyarr[0])) #Убираем из строки начальный ноль, чтобы в dayfirst был не ноль а число.
 dayfirst = int(list(day)[0]) #Формируется массив из чисел дня, если их больше одного, берется нулевой элемент
-#check: print('df ', dayfirst)
+check: print('first Number of day = ', dayfirst)
 year = dmyarr[2]
 #test: print("dmyarr: ", ''.join(dmyarr))
 
@@ -141,7 +141,7 @@ print('Money =', len(findto(456, all)))
 print('Talant =', len(findto(789, all)))
 
 print('Duhovnost =', len(findto(159, all)))
-print('Vlechenie =', len(findto(357, all)))
+print('Temperament =', len(findto(357, all)))
 
 #Рисуем GUI (4 колонки/11строк)
 #1#Дата рождения    /Значение                           /Темперамент(357)
