@@ -67,10 +67,17 @@ def clickedBtn():
     print(lbl_birthday_value.get())
     return True
 
+def nd(fwnarr):
+    res = fwnarr
+    while (len(str(res)) != 1):
+        res = strsum(res)
+        print(res)
+    return res
+
 #Begin==================================================
 
 fwnarr = re.sub(r'[/.,;-]', '', indata) # строка ddmmyyyy
-numdesteny = strsum(fwnarr)
+numdesteny = nd(fwnarr)
 dmyarr = re.split(r'[/,.;-]', indata)   # массив [dd, mm, yyyy]
 #check: print(fwnarr, ' ', dmyarr)
 day = str(int(dmyarr[0])) #Убираем из строки начальный ноль, чтобы в dayfirst был не ноль а число.
