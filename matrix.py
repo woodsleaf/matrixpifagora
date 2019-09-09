@@ -64,7 +64,8 @@ def fwn(indata):
 #from input to text
 def clickedBtn():
     indata = lbl_birthday_value.get()
-    print(lbl_birthday_value.get())
+    main(indata)
+    print(indata)
     return True
 
 def nd(fwnarr):
@@ -75,73 +76,94 @@ def nd(fwnarr):
     return res
 
 #Begin==================================================
+def main(indata):
+    fwnarr = re.sub(r'[/.,;-]', '', indata) # строка ddmmyyyy
+    numdesteny = nd(fwnarr)
+    dmyarr = re.split(r'[/,.;-]', indata)   # массив [dd, mm, yyyy]
+    #check: print(fwnarr, ' ', dmyarr)
+    day = str(int(dmyarr[0])) #Убираем из строки начальный ноль, чтобы в dayfirst был не ноль а число.
+    dayfirst = int(list(day)[0]) #Формируется массив из чисел дня, если их больше одного, берется нулевой элемент
+    check: print('first Number of day = ', dayfirst)
+    year = dmyarr[2]
+    #test: print("dmyarr: ", ''.join(dmyarr))
 
-fwnarr = re.sub(r'[/.,;-]', '', indata) # строка ddmmyyyy
-numdesteny = nd(fwnarr)
-dmyarr = re.split(r'[/,.;-]', indata)   # массив [dd, mm, yyyy]
-#check: print(fwnarr, ' ', dmyarr)
-day = str(int(dmyarr[0])) #Убираем из строки начальный ноль, чтобы в dayfirst был не ноль а число.
-dayfirst = int(list(day)[0]) #Формируется массив из чисел дня, если их больше одного, берется нулевой элемент
-check: print('first Number of day = ', dayfirst)
-year = dmyarr[2]
-#test: print("dmyarr: ", ''.join(dmyarr))
+    firstworknumber = fwn(indata)
+    #test: print('WN1: ', firstworknumber)
 
-firstworknumber = fwn(indata)
-#test: print('WN1: ', firstworknumber)
+    secondworknumber = 0
+    if (truegod(firstworknumber)):
+        secondworknumber = firstworknumber
+    else:
+        secondworknumber = strsum(str(firstworknumber))
 
-secondworknumber = 0
-if (truegod(firstworknumber)):
-    secondworknumber = firstworknumber
-else:
-    secondworknumber = strsum(str(firstworknumber))
+    #test: print('WN2: ', secondworknumber)
 
-#test: print('WN2: ', secondworknumber)
+    threeworknumber = 0
+    if (int(year) >= 2000):
+        #после 2000 включительно
+        threeworknumber = str(int(firstworknumber) + 19)
+    else:
+        threeworknumber = str(int(firstworknumber) - int(dayfirst)*2)
 
-threeworknumber = 0
-if (int(year) >= 2000):
-    #после 2000 включительно
-    threeworknumber = str(int(firstworknumber) + 19)
-else:
-    threeworknumber = str(int(firstworknumber) - int(dayfirst)*2)
+    #test: print('WN3: ', threeworknumber)
 
-#test: print('WN3: ', threeworknumber)
+    fourworknumber = 0
+    if (truegod(threeworknumber)):
+        fourworknumber = threeworknumber
+    else:
+        fourworknumber = strsum(str(threeworknumber))
 
-fourworknumber = 0
-if (truegod(threeworknumber)):
-    fourworknumber = threeworknumber
-else:
-    fourworknumber = strsum(str(threeworknumber))
+    #test: print('WN4: ', fourworknumber)
 
-#test: print('WN4: ', fourworknumber)
+    print(fullname)
+    print(indata)
+    all = ''
+    if (int(year) >= 2000):
+        #после 2000 включительно
+        print(firstworknumber, secondworknumber, '19', threeworknumber, fourworknumber)
+        dopnum = firstworknumber, secondworknumber, '19', threeworknumber, fourworknumber
+        all = ''.join(dmyarr) + str(firstworknumber) + str(secondworknumber) + '19' + str(threeworknumber) + str(fourworknumber)
+    else:
+        print(firstworknumber, secondworknumber, threeworknumber, fourworknumber)
+        dopnum = firstworknumber, secondworknumber, threeworknumber, fourworknumber
+        all = ''.join(dmyarr) + str(firstworknumber) + str(secondworknumber) + str(threeworknumber) + str(fourworknumber)
 
-print(fullname)
-print(indata)
-all = ''
-if (int(year) >= 2000):
-    #после 2000 включительно
-    print(firstworknumber, secondworknumber, '19', threeworknumber, fourworknumber)
-    dopnum = firstworknumber, secondworknumber, '19', threeworknumber, fourworknumber
-    all = ''.join(dmyarr) + str(firstworknumber) + str(secondworknumber) + '19' + str(threeworknumber) + str(fourworknumber)
-else:
-    print(firstworknumber, secondworknumber, threeworknumber, fourworknumber)
-    dopnum = firstworknumber, secondworknumber, threeworknumber, fourworknumber
-    all = ''.join(dmyarr) + str(firstworknumber) + str(secondworknumber) + str(threeworknumber) + str(fourworknumber)
+    print(all)
+    print('[{}][{}][{}]'.format(findto(1, all),findto(4, all),findto(7, all)) )
+    print('[{}][{}][{}]'.format(findto(2, all),findto(5, all),findto(8, all)) )
+    print('[{}][{}][{}]'.format(findto(3, all),findto(6, all),findto(9, all)) )
 
-print(all)
-print('[{}][{}][{}]'.format(findto(1, all),findto(4, all),findto(7, all)) )
-print('[{}][{}][{}]'.format(findto(2, all),findto(5, all),findto(8, all)) )
-print('[{}][{}][{}]'.format(findto(3, all),findto(6, all),findto(9, all)) )
+    print('Target =', len(findto(147, all)))
+    print('Famile =', len(findto(258, all)))
+    print('Stable. =', len(findto(369, all)))
 
-print('Target =', len(findto(147, all)))
-print('Famile =', len(findto(258, all)))
-print('Stable. =', len(findto(369, all)))
+    print('Samoocenka =', len(findto(123, all)))
+    print('Money =', len(findto(456, all)))
+    print('Talant =', len(findto(789, all)))
 
-print('Samoocenka =', len(findto(123, all)))
-print('Money =', len(findto(456, all)))
-print('Talant =', len(findto(789, all)))
+    print('Duhovnost =', len(findto(159, all)))
+    print('Temperament =', len(findto(357, all)))
 
-print('Duhovnost =', len(findto(159, all)))
-print('Temperament =', len(findto(357, all)))
+    lbl_dopnumbers_value['text'] = dopnum
+    lbl_temperament_value['text'] = len(findto(357, all))
+    lbl_desteny_value['text'] = numdesteny
+    lbl_character_value['text'] = findto(1, all)
+    lbl_zdorovie_value['text'] = findto(4, all)
+    lbl_udacha_value['text'] = findto(7, all)
+    lbl_target_value['text'] = len(findto(147, all))
+    lbl_energy_value['text'] = findto(2, all)
+    lbl_logika_value['text'] = findto(5, all)
+    lbl_dolg_value['text'] = findto(8, all)
+    lbl_family_value['text'] = len(findto(258, all))
+    lbl_interes_value['text'] = findto(3, all)
+    lbl_trud_value['text'] = findto(6, all)
+    lbl_memory_value['text'] = findto(9, all)
+    lbl_privichki_value['text'] = len(findto(369, all))
+    lbl_samoocenka_value['text'] = len(findto(123, all))
+    lbl_money_value['text'] = len(findto(456, all))
+    lbl_talant_value['text'] = len(findto(789, all))
+    lbl_duhovnost_value['text'] = len(findto(159, all))
+    return True
 
 #Рисуем GUI (4 колонки/11строк)
 #1#Дата рождения    /Значение                           /Темперамент(357)
@@ -184,7 +206,6 @@ lbl_birthday_value.focus()
 lbl_birthday_value.grid(column=1, row=0)
 btn = Button(window, command=clickedBtn, text="Вычислить", bg="white", fg="black")
 btn.grid(column=2, row=0)
-
 lbl_temperament = Label(window, text="Темперамент(357)", font=("Arial", 18))
 lbl_temperament.grid(column=3, row=0)
 
@@ -192,20 +213,15 @@ lbl_temperament.grid(column=3, row=0)
 lbl_dopnumbers = Label(window, text="Доп числа", font=("Arial Bold", 18))
 lbl_dopnumbers.grid(column=0, row=1)
 lbl_dopnumbers_value = Label(window, text="1st, 2st, 3st, 4st", font=("Arial", 14))
-lbl_dopnumbers_value['text'] = dopnum
 lbl_dopnumbers_value.grid(column=1, row=1)
-
 lbl_temperament_value = Label(window, text="value", font=("Arial", 14))
-lbl_temperament_value['text'] = len(findto(357, all))
 lbl_temperament_value.grid(column=3, row=1)
 
 #two
 lbl_desteny = Label(window, text="Число судьбы", font=("Arial Bold", 18))
 lbl_desteny.grid(column=0, row=2)
 lbl_desteny_value = Label(window, text="value", font=("Arial", 14))
-lbl_desteny_value['text'] = numdesteny
 lbl_desteny_value.grid(column=1, row=2)
-
 
 #three
 lbl_character = Label(window, text="Характер(1)", font=("Arial Bold", 18))
@@ -218,16 +234,12 @@ lbl_target = Label(window, text="Цель(147)", font=("Arial Bold", 18))
 lbl_target.grid(column=3, row=3)
 
 lbl_character_value = Label(window, text="value", font=("Arial", 14))
-lbl_character_value['text'] = findto(1, all)
 lbl_character_value.grid(column=0, row=4)
 lbl_zdorovie_value = Label(window, text="value", font=("Arial", 14))
-lbl_zdorovie_value['text'] = findto(4, all)
 lbl_zdorovie_value.grid(column=1, row=4)
 lbl_udacha_value = Label(window, text="value", font=("Arial", 14))
-lbl_udacha_value['text'] = findto(7, all)
 lbl_udacha_value.grid(column=2, row=4)
 lbl_target_value = Label(window, text="value", font=("Arial", 14))
-lbl_target_value['text'] = len(findto(147, all))
 lbl_target_value.grid(column=3, row=4)
 
 #five
@@ -241,16 +253,12 @@ lbl_family = Label(window, text="Семья(258)", font=("Arial Bold", 18))
 lbl_family.grid(column=3, row=5)
 
 lbl_energy_value = Label(window, text="value", font=("Arial", 14))
-lbl_energy_value['text'] = findto(2, all)
 lbl_energy_value.grid(column=0, row=6)
 lbl_logika_value = Label(window, text="value", font=("Arial", 14))
-lbl_logika_value['text'] = findto(5, all)
 lbl_logika_value.grid(column=1, row=6)
 lbl_dolg_value = Label(window, text="value", font=("Arial", 14))
-lbl_dolg_value['text'] = findto(8, all)
 lbl_dolg_value.grid(column=2, row=6)
 lbl_family_value = Label(window, text="value", font=("Arial", 14))
-lbl_family_value['text'] = len(findto(258, all))
 lbl_family_value.grid(column=3, row=6)
 
 #seven
@@ -264,16 +272,12 @@ lbl_privichki = Label(window, text="Привычки(369)", font=("Arial Bold", 
 lbl_privichki.grid(column=3, row=7)
 
 lbl_interes_value = Label(window, text="value", font=("Arial", 14))
-lbl_interes_value['text'] = findto(3, all)
 lbl_interes_value.grid(column=0, row=8)
 lbl_trud_value = Label(window, text="value", font=("Arial", 14))
-lbl_trud_value['text'] = findto(6, all)
 lbl_trud_value.grid(column=1, row=8)
 lbl_memory_value = Label(window, text="value", font=("Arial", 14))
-lbl_memory_value['text'] = findto(9, all)
 lbl_memory_value.grid(column=2, row=8)
 lbl_privichki_value = Label(window, text="value", font=("Arial", 14))
-lbl_privichki_value['text'] = len(findto(369, all))
 lbl_privichki_value.grid(column=3, row=8)
 
 #nine
@@ -287,17 +291,14 @@ lbl_duhovnost = Label(window, text="Духовность(159)", font=("Arial Bol
 lbl_duhovnost.grid(column=3, row=9)
 
 lbl_samoocenka_value = Label(window, text="value", font=("Arial", 14))
-lbl_samoocenka_value['text'] = len(findto(123, all))
 lbl_samoocenka_value.grid(column=0, row=10)
 lbl_money_value = Label(window, text="value", font=("Arial", 14))
-lbl_money_value['text'] = len(findto(456, all))
 lbl_money_value.grid(column=1, row=10)
 lbl_talant_value = Label(window, text="value", font=("Arial", 14))
-lbl_talant_value['text'] = len(findto(789, all))
 lbl_talant_value.grid(column=2, row=10)
 lbl_duhovnost_value = Label(window, text="value", font=("Arial", 14))
-lbl_duhovnost_value['text'] = len(findto(159, all))
 lbl_duhovnost_value.grid(column=3, row=10)
 
+main(indata)
 # must be end
 window.mainloop()
