@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(description='Enter birthday')
 parser.add_argument(
     '-d',
     '--birthday',
-    default='17-11-1991',
+    default='01-01-1978', #'17-11-1991'
     help='provide an birthday -d=ddmmyyyy (default: 17-11-1991 )'
 )
 parser.add_argument(
@@ -36,15 +36,8 @@ indata = my_namespace.birthday
 [33][][99]
 '''
 
-dmyarr = re.split(r'[,.;-]', indata)
-day = dmyarr[0]
-dayfirst = int(list(day)[0])
-#print('df ', dayfirst)
-year = dmyarr[2]
-#test: print("dmyarr: ", ''.join(dmyarr))
-
 def findto(mychar, mystr):
-    mychar= str(mychar)
+    mychar= '[' + str(mychar) + ']'
     res = re.findall(mychar, mystr)
     return ''.join(res)
 #test: print(findto(1,'34241414'))
@@ -65,16 +58,25 @@ def truegod(num):
 #test: print(truegod(5))
 
 def fwn(indata):
-    return strsum(re.sub(r'[.,;-]', '', indata))
+    return strsum(re.sub(r'[/.,;-]', '', indata))
 #test: print(fwn(indata))
 
 #from input to text
 def clickedBtn():
     indata = lbl_birthday_value.get()
-    print(indata)
+    print(lbl_birthday_value.get())
     return True
 
 #Begin==================================================
+
+fwnarr = re.sub(r'[/.,;-]', '', indata) # строка ddmmyyyy
+dmyarr = re.split(r'[/,.;-]', indata)   # массив [dd, mm, yyyy]
+#check: print(fwnarr, ' ', dmyarr)
+day = str(int(dmyarr[0])) #Убираем из строки начальный ноль, чтобы в dayfirst был не ноль а число.
+dayfirst = int(list(day)[0]) #Формируется массив из чисел дня, если их больше одного, берется нулевой элемент
+#check: print('df ', dayfirst)
+year = dmyarr[2]
+#test: print("dmyarr: ", ''.join(dmyarr))
 
 firstworknumber = fwn(indata)
 #test: print('WN1: ', firstworknumber)
@@ -122,6 +124,17 @@ print('[{}][{}][{}]'.format(findto(1, all),findto(4, all),findto(7, all)) )
 print('[{}][{}][{}]'.format(findto(2, all),findto(5, all),findto(8, all)) )
 print('[{}][{}][{}]'.format(findto(3, all),findto(6, all),findto(9, all)) )
 
+print('Target =', len(findto(147, all)))
+print('Famile =', len(findto(258, all)))
+print('Stable. =', len(findto(369, all)))
+
+print('Samoocenka =', len(findto(123, all)))
+print('Money =', len(findto(456, all)))
+print('Talant =', len(findto(789, all)))
+
+print('Duhovnost =', len(findto(159, all)))
+print('Vlechenie =', len(findto(357, all)))
+
 #Рисуем GUI (4 колонки/12строк)
 #Дата рождения  /Значение               /Темперамент
 #Доп. числа     /Значение               /Значение
@@ -163,34 +176,29 @@ lbl_birthday_value.focus()
 lbl_birthday_value.grid(column=1, row=0)
 btn = Button(window, command=clickedBtn, text="Вычислить", bg="white", fg="black")
 btn.grid(column=2, row=0)
-#lbl_temperament = Label(window, text="Темперамент", font=("Arial", 18))
-#lbl_temperament.grid(column=3, row=0)
+lbl_temperament = Label(window, text="Темперамент", font=("Arial", 18))
+lbl_temperament.grid(column=3, row=0)
 
 lbl_dopnumbers = Label(window, text="Доп числа", font=("Arial Bold", 18))
 lbl_dopnumbers.grid(column=0, row=1)
 lbl_dopnumbers_value = Label(window, text="1st, 2st, 3st, 4st", font=("Arial", 14))
 lbl_dopnumbers_value['text'] = dopnum
 lbl_dopnumbers_value.grid(column=1, row=1)
-#lbl_temperament_value = Label(window, text="value", font=("Arial", 14))
-#lbl_temperament_value.grid(column=3, row=1)
+lbl_temperament_value = Label(window, text="value", font=("Arial", 14))
+lbl_temperament_value.grid(column=3, row=1)
 
-#lbl_desteny = Label(window, text="Число судьбы", font=("Arial Bold", 18))
-#lbl_desteny.grid(column=0, row=2)
-#lbl_desteny_value = Label(window, text="value", font=("Arial", 14))
-#lbl_desteny_value.grid(column=1, row=2)
-
+lbl_desteny = Label(window, text="Число судьбы", font=("Arial Bold", 18))
+lbl_desteny.grid(column=0, row=2)
 
 #three
 lbl_character = Label(window, text="Характер(1)", font=("Arial Bold", 18))
 lbl_character.grid(column=0, row=3)
 lbl_zdorovie = Label(window, text="Здоровье(4)", font=("Arial Bold", 18))
 lbl_zdorovie.grid(column=1, row=3)
-lbl_talant = Label(window, text="Талант(7)", font=("Arial Bold", 18))
-lbl_talant.grid(column=2, row=3)
-#lbl_udacha = Label(window, text="Удача", font=("Arial Bold", 18))
-#lbl_udacha.grid(column=1, row=9)
-#lbl_target = Label(window, text="Цель(2)", font=("Arial Bold", 18))
-#lbl_target.grid(column=3, row=3)
+lbl_udacha = Label(window, text="Удача", font=("Arial Bold", 18))
+lbl_udacha.grid(column=2, row=3)
+lbl_target = Label(window, text="Цель(2)", font=("Arial Bold", 18))
+lbl_target.grid(column=3, row=3)
 
 lbl_character_value = Label(window, text="value", font=("Arial", 14))
 lbl_character_value['text'] = findto(1, all)
@@ -198,15 +206,12 @@ lbl_character_value.grid(column=0, row=4)
 lbl_zdorovie_value = Label(window, text="value", font=("Arial", 14))
 lbl_zdorovie_value['text'] = findto(4, all)
 lbl_zdorovie_value.grid(column=1, row=4)
-lbl_talant_value = Label(window, text="value", font=("Arial", 14))
-lbl_talant_value['text'] = findto(7, all)
-lbl_talant_value.grid(column=2, row=4)
-#lbl_udacha_value = Label(window, text="value", font=("Arial", 14))
+lbl_udacha_value = Label(window, text="value", font=("Arial", 14))
 #lbl_udacha_value['text'] =
-#lbl_udacha_value.grid(column=1, row=10)
-#lbl_target_value = Label(window, text="value", font=("Arial", 14))
-#lbl_target_value['text'] = findto(2, all)
-#lbl_target_value.grid(column=3, row=4)
+lbl_udacha_value.grid(column=2, row=4)
+lbl_target_value = Label(window, text="value", font=("Arial", 14))
+lbl_target_value['text'] = findto(2, all)
+lbl_target_value.grid(column=3, row=4)
 
 #five
 lbl_energy = Label(window, text="Энергия(2)", font=("Arial Bold", 18))
@@ -215,8 +220,8 @@ lbl_logika = Label(window, text="Логика(5)", font=("Arial Bold", 18))
 lbl_logika.grid(column=1, row=5)
 lbl_dolg = Label(window, text="Долг(8)", font=("Arial Bold", 18))
 lbl_dolg.grid(column=2, row=5)
-#lbl_family = Label(window, text="Семья(2)", font=("Arial Bold", 18))
-#lbl_family.grid(column=3, row=5)
+lbl_family = Label(window, text="Семья(2)", font=("Arial Bold", 18))
+lbl_family.grid(column=3, row=5)
 
 lbl_energy_value = Label(window, text="value", font=("Arial", 14))
 lbl_energy_value['text'] = findto(2, all)
@@ -227,9 +232,9 @@ lbl_logika_value.grid(column=1, row=6)
 lbl_dolg_value = Label(window, text="value", font=("Arial", 14))
 lbl_dolg_value['text'] = findto(8, all)
 lbl_dolg_value.grid(column=2, row=6)
-#lbl_family_value = Label(window, text="value", font=("Arial", 14))
+lbl_family_value = Label(window, text="value", font=("Arial", 14))
 #lbl_family_value['text'] = findto(2, all)
-#lbl_family_value.grid(column=3, row=6)
+lbl_family_value.grid(column=3, row=6)
 
 #seven
 lbl_interes = Label(window, text="Интерес(3)", font=("Arial Bold", 18))
@@ -238,8 +243,8 @@ lbl_trud = Label(window, text="Труд(6)", font=("Arial Bold", 18))
 lbl_trud.grid(column=1, row=7)
 lbl_memory = Label(window, text="Память(9)", font=("Arial Bold", 18))
 lbl_memory.grid(column=2, row=7)
-#lbl_privichki = Label(window, text="Привычки(8)", font=("Arial Bold", 18))
-#lbl_privichki.grid(column=3, row=7)
+lbl_privichki = Label(window, text="Привычки(8)", font=("Arial Bold", 18))
+lbl_privichki.grid(column=3, row=7)
 
 lbl_interes_value = Label(window, text="value", font=("Arial", 14))
 lbl_interes_value['text'] = findto(3, all)
@@ -250,17 +255,22 @@ lbl_trud_value.grid(column=1, row=8)
 lbl_memory_value = Label(window, text="value", font=("Arial", 14))
 lbl_memory_value['text'] = findto(9, all)
 lbl_memory_value.grid(column=2, row=8)
-#lbl_privichki_value = Label(window, text="value", font=("Arial", 14))
-#lbl_privichki_value['text'] = findto(8, all)
-#lbl_privichki_value.grid(column=3, row=8)
+lbl_privichki_value = Label(window, text="value", font=("Arial", 14))
+lbl_privichki_value['text'] = findto(8, all)
+lbl_privichki_value.grid(column=3, row=8)
 
 #nine
-#lbl_bit = Label(window, text="Быт(4)", font=("Arial Bold", 18))
-#lbl_bit.grid(column=0, row=9)
+lbl_bit = Label(window, text="Быт(4)", font=("Arial Bold", 18))
+lbl_bit.grid(column=0, row=9)
+lbl_talant = Label(window, text="Талант(7)", font=("Arial Bold", 18))
+lbl_talant.grid(column=1, row=9)
 
-#lbl_bit_value = Label(window, text="value", font=("Arial", 14))
-#lbl_bit_value['text'] = findto(4, all)
-#lbl_bit_value.grid(column=0, row=10)
+lbl_bit_value = Label(window, text="value", font=("Arial", 14))
+lbl_bit_value['text'] = findto(4, all)
+lbl_bit_value.grid(column=0, row=10)
+lbl_talant_value = Label(window, text="value", font=("Arial", 14))
+lbl_talant_value['text'] = findto(7, all)
+lbl_talant_value.grid(column=1, row=10)
 
 # must be end
 window.mainloop()
